@@ -21,8 +21,6 @@ An app for the Musical Quiz. The website is under development.
 
 ## Result
 <a href="https://www.otgadaymelody.ru">Click here</a>
-<p><img src="images/readme/1.JPG" alt="result"></p>
-
 
 
 
