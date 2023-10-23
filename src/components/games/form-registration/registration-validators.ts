@@ -46,7 +46,7 @@ export const validateTelNumber = (value: string): ValidationReturnType => {
   if (value.length < 11) {
     return {
       valid: false,
-      errorMessage: 'Номер слишком короткий',
+      errorMessage: 'Номер слишком короткий, начните с 7 или 8',
     };
   }
   let formattedPhoneNumber = '+7(';
@@ -79,10 +79,11 @@ export const validateTelNumber = (value: string): ValidationReturnType => {
 };
 
 export const validateSocialMediaPage = (value: string): ValidationReturnType => {
-  if (value.length > 250) {
+  const valid = typeof value === 'string';
+  if (!valid && value) {
     return {
       valid: false,
-      errorMessage: 'Слишком большая ссылка',
+      errorMessage: 'Вставьте ссылку или никнейм',
     };
   }
   return {
@@ -98,9 +99,16 @@ export const validateBirthday = (value: string): ValidationReturnType => {
   if (isNaN(selectedDate.getTime()) || age > 120 || age < 16) {
     return {
       valid: false,
-      errorMessage: 'Неверный формат',
+      errorMessage: 'Игра от 16 лет',
     };
   }
+  return {
+    valid: true,
+    errorMessage: '',
+  };
+};
+
+export const validateComment = (value: string): ValidationReturnType => {
   return {
     valid: true,
     errorMessage: '',

@@ -15,25 +15,22 @@ const UpcomingGame: FC<BaseComponent> = ({ className }): React.ReactElement => {
   const isDesktop = deviceType === 'desktop';
   const isMobile = deviceType === 'mobile';
 
+  const [nextGameImgKey, setNextGameImgKey] = useState('');
+
   const [nextGame, setNextGame] = useState<UpcomingGameResponseType>({
-    franchiseeId: 0,
-    gameAddress: {
-      building: '',
-      city: '',
-      street: '',
-    },
-    gameBasePrice: '',
-    gameCityId: 0,
-    gameCityName: '',
-    gameCurrencyPrice: '',
-    gameDate: '',
-    gameLocationName: '',
+    id: '',
     gameName: '',
-    gameTime: '',
     gameType: '',
-    id: 0,
+    gameDate: '',
+    gameTime: '',
+    gameLocationName: '',
+    address: '',
+    cityName: '',
+    gameDescription: '',
+    priceValue: 0,
+    gameLocationId: '',
     info: {
-      coordinates: [0, 0],
+      coordinates: [],
       description: '',
       imageSrc: '',
     },
@@ -45,6 +42,7 @@ const UpcomingGame: FC<BaseComponent> = ({ className }): React.ReactElement => {
       .get('api/next-game')
       .then((res) => {
         setNextGame(res.data);
+        setNextGameImgKey(res.data.gameType);
         setErrorMessage('');
       })
       .catch((err) => {
@@ -58,8 +56,7 @@ const UpcomingGame: FC<BaseComponent> = ({ className }): React.ReactElement => {
     bottomLeft: 'banner__mediator_bottom-left',
     bottomRight: 'banner__mediator_bottom-right',
   };
-  const nextGameImgKey = nextGame.info.imageSrc.replace(/^\/|\.png$/g, '');
-
+  console.log('nextGameImgKey', nextGameImgKey);
   return (
     <>
       {errorMessage !== '' && <NotificationError message={errorMessage} />}
@@ -74,8 +71,7 @@ const UpcomingGame: FC<BaseComponent> = ({ className }): React.ReactElement => {
               <img
                 className="upcoming-game__img"
                 src={
-                  nextGameImg[nextGameImgKey || 'women-img'] &&
-                  nextGameImg[nextGameImgKey || 'women-img']?.path
+                  nextGameImg?.[nextGameImgKey || 'women-img']?.path
                     ? nextGameImg[nextGameImgKey || 'women-img']?.path
                     : nextGameImg['women-img']?.path
                 }
@@ -93,7 +89,7 @@ const UpcomingGame: FC<BaseComponent> = ({ className }): React.ReactElement => {
                 <span className="upcoming-game__title">Ближайшая игра</span>
                 <h3 className="upcoming-game__game-title">{nextGame.gameName}</h3>
                 {!isMobile && (
-                  <p className="upcoming-game__game-description">{nextGame.info.description}</p>
+                  <p className="upcoming-game__game-description">{nextGame.gameDescription}</p>
                 )}
               </div>
               {isMobile && (

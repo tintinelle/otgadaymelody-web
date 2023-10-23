@@ -1,9 +1,8 @@
 export declare interface FutureGameProps extends React.AllHTMLAttributes<HTMLDivElement> {
   game: FutureGameResponseType;
-  index: number;
 }
 export declare interface FutureGameResponseType {
-  gameAddress: GameAddress;
+  address: string;
   gameBasePrice: string;
   gameCityId: number;
   gameCityName: string;
@@ -14,6 +13,7 @@ export declare interface FutureGameResponseType {
   gameTime: string;
   gameType: string;
   id: number;
+  priceValue?: string;
 }
 
 export declare interface GameAddress {

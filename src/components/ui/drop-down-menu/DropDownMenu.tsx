@@ -7,13 +7,15 @@ interface DropDownBtnsType {
 }
 
 interface DropDownMenuPropsType {
-  btns: DropDownBtnsType[];
+  btns?: DropDownBtnsType[];
   onClick: MouseEventHandler;
+  editGame: () => unknown;
 }
 
 const DropDownMenu: React.FC<DropDownMenuPropsType> = ({
   btns,
   onClick,
+  editGame,
 }: DropDownMenuPropsType) => {
   const clickToButtonMove = useCallback(
     (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
@@ -23,19 +25,24 @@ const DropDownMenu: React.FC<DropDownMenuPropsType> = ({
   );
   return (
     <div className={`dropdown-menu__wrapper`}>
-      {btns.map((btn: DropDownBtnsType, index: number) => {
-        return (
-          <button
-            onMouseDown={(e) => {
-              clickToButtonMove(e);
-            }}
-            key={index}
-            className={`dropdown-menu__button dropdown-menu__button_${btn.btnColor}`}
-          >
-            {btn.nameBtn}
-          </button>
-        );
-      })}
+      <button
+        onMouseDown={() => {
+          editGame();
+        }}
+        className={`dropdown-menu__button dropdown-menu__button_black`}
+      >
+        Редактировать
+      </button>
+
+      <button
+        onMouseDown={(e) => {
+          alert('Пока нельзя удалить игру! Но вы можете скрыть ее для пользователей');
+          clickToButtonMove(e);
+        }}
+        className={`dropdown-menu__button dropdown-menu__button_pink`}
+      >
+        Удалить
+      </button>
     </div>
   );
 };

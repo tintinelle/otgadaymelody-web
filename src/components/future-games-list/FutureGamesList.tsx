@@ -49,7 +49,12 @@ const FutureGamesList: FC<BaseComponent> = ({ className }): React.ReactElement =
 
   const slidesPerViewCountDesktop = getSlidesPerViewCountDesktop(futureGames.length);
   const slidesPerViewCountLargeDesktop = getSlidesPerViewCountLargeDesktop(futureGames.length);
-  const containerSliderSize = getContainerSliderSize(isTablet, isTabletLg, futureGames.length);
+  const containerSliderSize = getContainerSliderSize(
+    isTablet,
+    isTabletLg,
+    isMobile,
+    futureGames.length,
+  );
   const futureButtonsWrapper = getButtonsWrapperClass(
     futureGames.length,
     isTablet,
@@ -83,22 +88,28 @@ const FutureGamesList: FC<BaseComponent> = ({ className }): React.ReactElement =
             onBeforeInit={(swiper) => {
               swiperRef.current = swiper;
             }}
+            navigation={{
+              nextEl: '.future-games-list__slider-button-next',
+              prevEl: '.future-games-list__slider-button-prev',
+            }}
             spaceBetween={16}
             slidesPerView={1}
             className="future-games-list__games-list_mobile"
           >
             {futureGames.map((item, index) => (
               <SwiperSlide key={item.id} className={'future-games-list__game-slide_mobile'}>
-                <FutureGame className={'future-games-list__game'} game={item} index={index + 1} />
+                <FutureGame className={'future-games-list__game'} game={item} />
               </SwiperSlide>
             ))}
-            <div
-              className={
-                futureGames.length === 2 && isMobile
-                  ? 'future-games-list__button-wrapper_mobile-none'
-                  : 'future-games-list__button-wrapper_mobile'
-              }
-            >
+            <div className={'future-games-list__buttons-wrapper'}>
+              <div className="future-games-list__slider-button-prev">
+                <img src={sliderNextImg} alt={'Предыдущий'} />
+              </div>
+              <div className="future-games-list__slider-button-next">
+                <img src={sliderPrevImg} alt={'Следующий'} />
+              </div>
+            </div>
+            <div className={'future-games-list__button-wrapper_mobile-none'}>
               <BaseButton
                 title="Показать ещё"
                 styles={showMoreBtnClasses}
@@ -136,7 +147,7 @@ const FutureGamesList: FC<BaseComponent> = ({ className }): React.ReactElement =
             >
               {futureGames.map((item, index) => (
                 <SwiperSlide key={item.id} className={'future-games-list__game-slide'}>
-                  <FutureGame className={'future-games-list__game'} game={item} index={index + 1} />
+                  <FutureGame className={'future-games-list__game'} game={item} />
                 </SwiperSlide>
               ))}
               <div className={futureButtonsWrapper}>
