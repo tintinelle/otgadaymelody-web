@@ -20,7 +20,7 @@ An app for the Musical Quiz. The website is under development.
 
 
 ## Result
-<a href="https://www.otgadaymelody.ru">Click here</a>
+<a href="https://www.otgadaymelody.ru/?demoVersion=true">Click here</a>
 
 
 
